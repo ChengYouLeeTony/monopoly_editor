@@ -1,0 +1,12 @@
+# Text backup files
+.git
+*.bak
+db.sqlite3
+.DS_Store
+*.pptx
+log.txt
+test.html
+test2.html
+config.ini
+migrations
+userdata
