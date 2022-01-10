@@ -177,5 +177,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #Azure storage settings
 DEFAULT_FILE_STORAGE = 'monopoly_new.backend.custom_azure.AzureMediaStorage'
 # STATICFILES_STORAGE = 'monopoly_new.backend.custom_azure.AzureStaticStorage'
-AZURE_ACCOUNT_NAME = "monopolyuserupload"
+AZURE_ACCOUNT_NAME = "YOUR_AZURE_ACCOUNT_NAME"
 AZURE_OVERWRITE_FILES = True
