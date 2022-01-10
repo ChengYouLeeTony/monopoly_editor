@@ -1,5 +1,5 @@
-# Monopoly_EDITOR
+# Monopoly EDITOR
 Edit your monopoly games on the web
 https://monopoly-creator.herokuapp.com/monopoly/creator/
-# Refernce
+## Refernce
 - Game system:https://github.com/geeeeeeeeek/monopoly
