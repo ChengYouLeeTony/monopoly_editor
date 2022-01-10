@@ -1,0 +1,31 @@
+{% extends "base_creator.html" %}
+
+{% block content %}
+<style type="text/css">
+	h3 {
+		color: #1890ff;
+	}
+</style>
+<div id="image">
+	<h3>圖片與icons</h3>
+	<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+	<div>Icons made by <a href="https://www.flaticon.com/authors/vaadin" title="Vaadin">Vaadin</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+	<div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+	<div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+	<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+</div>
+<div id="music">
+	<h3>音樂與音效</h3>
+	<div><a href="https://www.rpgmakercentral.com/topic/3362-music-loops-bgm-collection-free-commercial-use/">Aaron Krogh</a></div>
+	<div><a href="https://moonwind.pw/material_sound_mp3.html">MoonWind</a></div>
+</div>
+<div id="game">
+	<h3>大富翁遊戲基礎</h3>
+	<div><a href="https://github.com/geeeeeeeeek/monopoly">Github</a></div>
+</div>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#thanks').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

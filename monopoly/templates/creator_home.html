@@ -1,0 +1,14 @@
+{% extends "base_creator.html" %}
+
+{% block content %}
+<div class="w3-center">
+  <h1>歡迎來到大富翁創造家</h1>
+  <p>在這裡你可以發揮想像力創造出屬於自己的獨特大富翁遊戲，或是可以遊玩別人創造的大富翁遊戲</p>
+  <p>對了,這裡創造出來的遊戲是可以連線遊玩的喔!</p>
+  <p>快來邀請你的親朋好友來玩你創造的遊戲吧!</p>
+  <img style="height: 45vh;" src="https://i.pinimg.com/564x/a2/ec/b2/a2ecb24b06269e14b8f0bbf5b02faf00.jpg">
+  <div>
+    <a style=" margin-top: 4vh;"href="{% url 'tutorial' %}" class="w3-button w3-black">開始</a>
+  </div>
+</div>
+{% endblock %}

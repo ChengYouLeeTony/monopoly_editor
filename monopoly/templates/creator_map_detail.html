@@ -1,0 +1,139 @@
+{% extends "base_creator.html" %}
+
+{% block content %}
+    <input id="mapID" value="{{ uuid }}" type="hidden">
+    <div id="form-container">
+      {% for land_form in land_form_list %}
+        <div id="{{ land_form.pos }}" class="w3-modal">
+          <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+            <div class="w3-center"><br>
+              <span onclick="document.getElementById('{{ land_form.pos }}').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            </div>
+            <form class="w3-container" action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <table class="land-form land-form-{{ land_form.pos }}">
+              {{ land_form.as_table }}
+              </table>
+              <input type="submit" class="w3-button w3-black" name="update_{{ land_form.pos }}" value="更新">
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+   {% if error_message %}
+      <script language='javascript' type='text/javascript'>
+        function notifyError() {
+            Swal.fire({
+              icon: 'error',
+              title: "{{ error_message|safe }}",
+              showConfirmButton: false,
+              timer:  2000
+            })
+        }
+        notifyError();
+      </script>       
+    {% endif %}
+
+  
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/creator_map.css' %}">
+  <div style="display: flex;justify-content: space-between;margin: 0px 25px;">
+    <div style="font-size:32px">地圖名稱:{{ map.map_name }}</div> 
+    <div style="font-size:32px">製作者:<a href="/monopoly/creator/map-gallery?author={{ map.creator }}">{{ map.creator }}</a></div>
+    <div style="font-size:32px">
+      地圖卡片集:
+      {% for cardset in cardsets %}
+        <a style="font-size:32px" href={{ cardset.get_absolute_url }}>{{ cardset.cardset_name }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div style="display: flex;justify-content: space-between;margin: 0px 25px;">
+    <a href="{% url 'map-edit' uuid%}" class="w3-button w3-black">編輯</a>
+    <a href="{% url 'join' user uuid%}" class="w3-button w3-black" target="_blank">遊玩</a>
+    <a href="{% url 'map-making-variables' uuid%}" class="w3-button w3-black">自訂變數</a>
+    <a href="{% url 'map-making-rules' uuid%}" class="w3-button w3-black" target="_blank">自訂規則</a>
+    <a href="{% url 'map-score-board-setting' uuid%}" class="w3-button w3-black">自訂計分板</a>
+    <a href="{% url 'music-setting' uuid%}" class="w3-button w3-black">自訂音效</a>
+    <a href="{% url 'background-setting' uuid%}" class="w3-button w3-black">自訂背景圖片</a>
+    <a href="{% url 'basic-setting' uuid%}" class="w3-button w3-black">基本設定</a>
+    <button onclick="copyMapID()" class="w3-button w3-black">複製地圖ID</button>
+  </div>
+  <table id="board">
+    <tr>
+      <td class="cell board-corner" id="cell20"></td>
+      <td class="cell board-top" id="cell21"></td>
+      <td class="cell board-top" id="cell22"></td>
+      <td class="cell board-top" id="cell23"></td>
+      <td class="cell board-top" id="cell24"></td>
+      <td class="cell board-top" id="cell25"></td>
+      <td class="cell board-top" id="cell26"></td>
+      <td class="cell board-top" id="cell27"></td>
+      <td class="cell board-top" id="cell28"></td>
+      <td class="cell board-top" id="cell29"></td>
+      <td class="cell board-corner" id="cell30"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell19"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell31"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell18"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell32"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell17"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell33"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell16"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell34"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell15"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell35"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell14"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell36"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell13"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell37"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell12"></td>
+      <td colspan="9" class="board-center"></td>
+      <td class="cell board-right" id="cell38"></td>
+    </tr><tr>
+      <td class="cell board-left" id="cell11"></td>
+      <td colspan="9" class="board-center">
+        <div id="jail"></div>
+      </td>
+      <td class="cell board-right" id="cell39"></td>
+    </tr><tr>
+      <td class="cell board-corner" id="cell10"></td>
+      <td class="cell board-bottom" id="cell9"></td>
+      <td class="cell board-bottom" id="cell8"></td>
+      <td class="cell board-bottom" id="cell7"></td>
+      <td class="cell board-bottom" id="cell6"></td>
+      <td class="cell board-bottom" id="cell5"></td>
+      <td class="cell board-bottom" id="cell4"></td>
+      <td class="cell board-bottom" id="cell3"></td>
+      <td class="cell board-bottom" id="cell2"></td>
+      <td class="cell board-bottom" id="cell1"></td>
+      <td class="cell board-corner" id="cell0"></td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+    let land_list = {{ lands_list|safe }};
+  </script>
+  {% load static %}
+  <script src="{% static 'js/creator/map_detail.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#map-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}
+
+
+

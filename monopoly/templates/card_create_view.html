@@ -1,0 +1,54 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block files %}
+<script src="{% static 'js/utils/audio_manager.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/card_create.css' %}">
+  <input id="background_img_url" hidden value="{{ background_img_url }}">
+  <form action="" method="post">
+    {% csrf_token %}
+    <table id="card-form">
+    {{ form.as_table }}
+    </table>
+    <input type="submit" class="w3-button w3-black" name="update" value="確認新增">
+    <a href="{% url 'cardset-detail' uuid %}" class="w3-button w3-black">返回卡片集</a>
+    <input id="preview" type="button" class="w3-button w3-black" value="預覽">
+  </form>
+  <div id="modal-card" class="card center-card hidden modal-hidden">
+      <div class="card-blur-container">
+          <div class="card-blur"></div>
+      </div>
+      <div class="card-content-container">
+          <img id="modal-user-avatar" class="active" src="">
+          <span id="modal-title"></span>
+          <span id="modal-subtitle"></span>
+          <div class="w3-center" id="modal-message-container"></div>
+          <div id="modal-buttons-container">
+            <button class="large-button" id="modal-button-0"></button>
+            <button class="large-button" id="modal-button-1"></button>
+            <button class="large-button" id="modal-button-2"></button>
+            <button class="large-button" id="modal-button-3"></button>
+          </div>
+      </div>
+  </div>
+  {% if error_message %}
+    <script language='javascript' type='text/javascript'>
+      function notifyError() {
+          Swal.fire({
+            icon: 'error',
+            title: "{{ error_message|safe }}",
+            showConfirmButton: false,
+            timer:  2000
+          })
+      }
+      notifyError();
+    </script>       
+  {% endif %}
+  <script src="{% static 'js/creator/card_create.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#cardset-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

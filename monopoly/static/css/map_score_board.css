@@ -1,0 +1,26 @@
+.custom-radio-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.errorlist {
+    display: none;
+}
+.scoreboard-bg {
+    background: url(/static/images/scoreboard_bg.png) no-repeat;
+    background-size: cover;
+}
+
+#other_input {
+    margin-left: 10px;
+    width: 233px;
+}
+
+.center-card {
+    left: 25vw !important; 
+}
+
+#modal-card {
+    margin-top: 23vh;
+}

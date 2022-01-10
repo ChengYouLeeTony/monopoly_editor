@@ -1,0 +1,72 @@
+{% extends "base_creator.html" %}
+{% block content %}
+<style type="text/css">
+	#illustration {
+		color: #1890ff;
+	}
+	.tutorial-img {
+		width: 65vw;
+	}
+	.special-blue-background-color {
+		background-color: rgb(229, 247, 254);
+	}
+</style>
+
+<ul class="w3-ul w3-border w3-round-xxlarge w3-border-blue">
+	<li>
+		<h3 id="illustration">使用說明</h3>
+	</li>
+  <li>
+  	<a href="https://docs.google.com/presentation/d/19eNv5_uXp8cyAeXHRpcyzcPYtH0SggRo/edit?usp=sharing&ouid=115279884618238101091&rtpof=true&sd=true">ppt檔案</a>
+  </li>
+  <li>
+  	<a href="https://drive.google.com/file/d/1FRzBfPCSG26tlGOwEtbGAyyPQSpfLnw4/view?usp=sharing">pdf檔案</a>
+  </li>
+</ul>
+<br>
+<div>
+	<p>以上是關於如何使用大富翁創造家的詳盡說明文件，裡面有很多張PPT，但其實本系統的使用是很簡單的!</p>
+	<p>首先請各位先玩玩看使用本系統做出來的遊戲吧!</p>
+	<h3 class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">目前有兩張範例地圖如下圖：</h3>
+	<img class="tutorial-img" src="/static/images/tutorial/1.png">
+	<h3 class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">點選哈利波特魔法世界(選擇題)後畫面後，點選"遊玩"即可開始遊玩啦!</h3>
+	<img class="tutorial-img" src="/static/images/tutorial/2-1.png">
+	<div class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">
+		<h3>下圖是遊戲加入頁面，在這裡可以透過連結邀請朋友一起遊玩</h3>
+		<p>也可以一個人看看遊戲長什麼樣子喔!</p>
+	</div>
+	<img class="tutorial-img" src="/static/images/tutorial/3.png">
+	<div class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">
+		<h3>如果想製作自己的地圖該怎麼辦呢?</h3>
+		<p>可以回到地圖的頁面點選複製地圖ID</p>
+	</div>
+	<img class="tutorial-img" src="/static/images/tutorial/2-2.png">
+	<div class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">
+		<h3>接著到"我的地圖"，貼上剛剛複製的地圖ID，並按"導入"按鈕</h3>
+	</div>
+	<img class="tutorial-img" src="/static/images/tutorial/4.png">
+	<div class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">
+		<h3>耐心等待數秒後，生成可自己編輯的遊戲地圖</h3>
+	</div>
+	<img class="tutorial-img" src="/static/images/tutorial/5.png">
+	<div class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">
+		<h3>點選後進入可以發現地圖有了編輯的功能了!</h3>
+		<p>先不要管各個功能是什麼，到處玩玩點點看吧!</p>
+	</div>
+	<img class="tutorial-img" src="/static/images/tutorial/6.png">
+	<div class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">
+		<h3>除了導入已有的地圖外，也可以新建一張地圖</h3>
+		<p>系統會自動生成一張範例的地圖喔!</p>
+	</div>
+	<img class="tutorial-img" src="/static/images/tutorial/7.png">
+	<div class="w3-panel w3-leftbar w3-border-blue special-blue-background-color">
+		<h3>希望大家能享受當創造家的樂趣</h3>
+		<p>遇到問題或是想要知道隱藏的使用方法，歡迎到說明文件中查看</p>
+	</div>
+</div>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#tutorial-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

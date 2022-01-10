@@ -1,0 +1,35 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block files %}
+<link rel="stylesheet" href="{% static 'css/background_setting.css' %}">
+{% endblock %}
+{% block content %}
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table id="music-setting-form">
+    {{ form.as_table }}
+    </table>
+    <input type="button" onclick="location.href='{% url 'map-detail' map_id%}'" class="w3-button w3-black" value="返回"></input>
+    <input id="update" type="submit" class="w3-button w3-black" name="update" value="更新">
+  </form>
+  {% if error_message %}
+    <script language='javascript' type='text/javascript'>
+      function notifyError() {
+          Swal.fire({
+            icon: 'error',
+            title: "{{ error_message|safe }}",
+            showConfirmButton: false,
+            timer:  2000
+          })
+      }
+      notifyError();
+    </script>       
+  {% endif %}
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#map-page').addClass("side-bar-item-activate");
+    let selector_table_tr_tile_background_img = "#music-setting-form tr:nth-child(2)";
+    $(selector_table_tr_tile_background_img).html($(selector_table_tr_tile_background_img).html().replace('Currently','當前圖片').replace('Change','更換圖片').replace('Clear',''));
+  </script>
+{% endblock %}

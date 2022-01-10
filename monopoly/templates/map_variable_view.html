@@ -1,0 +1,199 @@
+{% extends "base_creator.html" %}
+
+{% block content %}
+    {% for variable_form in variable_form_list %}
+      <div id="player_index_{{ variable_form.player_index }}" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+          <div class="w3-center"><br>
+            <span onclick="document.getElementById('player_index_{{ variable_form.player_index }}').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+          </div>
+          <form class="w3-container" action="" method="post">
+            {% csrf_token %}
+            <table>
+            {{ variable_form.as_table }}
+            </table>
+            <input type="submit" class="w3-button w3-black" name="update_{{ variable_form.player_index }}" value="更新">
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+<div class="w3-row">
+    <div class="w3-col s5">
+        <form action="" method="post">
+          {% csrf_token %}
+          <table>
+          {{ form.as_table }}
+          </table>
+          <button type="button" onclick="location.href='{% url 'map-detail' map_id%}'" class="w3-button w3-black">返回</button>
+          <input id="update" type="submit" class="w3-button w3-black" name="update" value="更新">
+        </form>
+    </div>
+    <div class="w3-col s3">
+      <p style="visibility:hidden;">invisible</p>
+    </div>
+  
+    <div class="w3-col s4 w3-cell">
+        <div class="w3-card-4" id="card-0">
+            <header class="w3-center w3-container w3-black">
+              <h1>{{ player1_variables.player_name }}</h1>
+            </header>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_1_name %}
+                  {{ user_define_variable_name.variable_1_name}}:{{ player1_variables.variable_1 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_2_name %}
+                  {{ user_define_variable_name.variable_2_name}}:{{ player1_variables.variable_2 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_3_name %}
+                  {{ user_define_variable_name.variable_3_name}}:{{ player1_variables.variable_3 }}
+                {% endif%}
+              </p>
+            </div>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_4_name %}
+                  {{ user_define_variable_name.variable_4_name}}:{{ player1_variables.variable_4 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_5_name %}
+                  {{ user_define_variable_name.variable_5_name}}:{{ player1_variables.variable_5 }}
+                {% endif%}
+              </p>
+            </div>
+        </div>
+        <div class="w3-card-4" id="card-1">
+            <header class="w3-center w3-container w3-black">
+              <h1>{{ player2_variables.player_name }}</h1>
+            </header>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_1_name %}
+                  {{ user_define_variable_name.variable_1_name}}:{{ player2_variables.variable_1 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_2_name %}
+                  {{ user_define_variable_name.variable_2_name}}:{{ player2_variables.variable_2 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_3_name %}
+                  {{ user_define_variable_name.variable_3_name}}:{{ player2_variables.variable_3 }}
+                {% endif%}
+              </p>
+            </div>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_4_name %}
+                  {{ user_define_variable_name.variable_4_name}}:{{ player2_variables.variable_4 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_5_name %}
+                  {{ user_define_variable_name.variable_5_name}}:{{ player2_variables.variable_5 }}
+                {% endif%}
+              </p>
+            </div>
+        </div>
+        <div class="w3-card-4" id="card-2">
+            <header class="w3-center w3-container w3-black">
+              <h1>{{ player3_variables.player_name }}</h1>
+            </header>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_1_name %}
+                  {{ user_define_variable_name.variable_1_name}}:{{ player3_variables.variable_1 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_2_name %}
+                  {{ user_define_variable_name.variable_2_name}}:{{ player3_variables.variable_2 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_3_name %}
+                  {{ user_define_variable_name.variable_3_name}}:{{ player3_variables.variable_3 }}
+                {% endif%}
+              </p>
+            </div>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_4_name %}
+                  {{ user_define_variable_name.variable_4_name}}:{{ player3_variables.variable_4 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_5_name %}
+                  {{ user_define_variable_name.variable_5_name}}:{{ player3_variables.variable_5 }}
+                {% endif%}
+              </p>
+            </div>
+        </div>
+        <div class="w3-card-4" id="card-3">
+            <header class="w3-center w3-container w3-black">
+              <h1>{{ player4_variables.player_name }}</h1>
+            </header>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_1_name %}
+                  {{ user_define_variable_name.variable_1_name}}:{{ player4_variables.variable_1 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_2_name %}
+                  {{ user_define_variable_name.variable_2_name}}:{{ player4_variables.variable_2 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_3_name %}
+                  {{ user_define_variable_name.variable_3_name}}:{{ player4_variables.variable_3 }}
+                {% endif%}
+              </p>
+            </div>
+            <div class="w3-container w3-row w3-center">
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_4_name %}
+                  {{ user_define_variable_name.variable_4_name}}:{{ player4_variables.variable_4 }}
+                {% endif%}
+              </p>
+              <p class="w3-col s4">
+                {% if user_define_variable_name.variable_5_name %}
+                  {{ user_define_variable_name.variable_5_name}}:{{ player4_variables.variable_5 }}
+                {% endif%}
+              </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style type="text/css">
+  .w3-card-4 {
+    cursor: pointer;
+  }
+</style>
+<script type="text/javascript">
+  $("#card-0").on("click", function(){
+      document.getElementById("player_index_0").style.display='block';
+    })
+  $("#card-1").on("click", function(){
+      document.getElementById("player_index_1").style.display='block';
+    })
+  $("#card-2").on("click", function(){
+      document.getElementById("player_index_2").style.display='block';
+    })
+  $("#card-3").on("click", function(){
+      document.getElementById("player_index_3").style.display='block';
+    })
+</script>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#map-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

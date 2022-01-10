@@ -1,0 +1,24 @@
+#music-setting-form input {
+	width: 233px;
+	padding: 5px 0px;
+	margin-top: 10px;
+}
+
+#music-setting-form label {
+	margin-top: 10px;
+}
+
+.errorlist {
+    display: none;
+}
+
+.fas {
+	margin-right: 1vw;
+}
+
+.preview-button, .volume-control-button {
+	margin-left: 2vw;
+	border-radius: 20px;
+	padding: 5px 16px;
+}
+

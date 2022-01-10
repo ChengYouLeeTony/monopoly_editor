@@ -1,0 +1,199 @@
+{% extends "base_creator.html" %}
+
+{% block content %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/creator_cardset_detail.css' %}">
+  <input id="cardsetID" value="{{ uuid }}" type="hidden">
+  {% if is_self_cardset %}
+    <form action="" method="post">
+      {% csrf_token %}
+      <label for="cardset_name" style="font-size:24px">卡片集名稱:</label>
+      <input type="text" style="font-size:24px" id="cardset_name" name="cardset_name" value= {{ cardset.cardset_name }}>     
+      <input id="delete" type="submit" class="w3-button w3-black" style="display: none;" name="delete" value="刪除">
+      <input id="delete-card" type="submit" class="w3-button w3-black" style="display: none;" name="delete-card" value="">
+      <br>
+      <label for="background_img_url" style="font-size:24px">卡片集背景圖片網址:</label>
+      <input type="text" style="font-size:24px" id="background_img_url" name="background_img_url" value= {{ cardset.background_img_url }}>
+      <input id="update" type="submit" class="w3-button w3-black" name="update" value="更新">
+      <input type="button" class="w3-button w3-red" onclick='confirmDelete()' value="刪除"> 
+    </form>
+  {% else %}
+    <span style="font-size:24px">卡片集名稱:</span> 
+    <span style="font-size:24px">{{ cardset.cardset_name }}</span>
+  {% endif %}
+  <div style="font-size:24px">製作者:<a href="/monopoly/creator/cardset-gallery?author={{ cardset.user }}">{{ cardset.user }}</a></div>
+  {% if error_message %}
+     <script language='javascript' type='text/javascript'>
+      let errorLength = "{{ error_message|safe }}".length;
+      function notifyError() {
+          Swal.fire({
+            icon: 'error',
+            title: "{{ error_message|safe }}",
+            showConfirmButton: false,
+            timer:  errorLength * 120
+          })
+      }
+      notifyError();
+    </script>
+  {% endif %}
+  {% if success_message %}
+    <script language='javascript' type='text/javascript'>
+      function notifyUpdate() {
+          Swal.fire({
+            icon: 'success',
+            title: "{{ success_message|safe }}",
+            showConfirmButton: false,
+            timer: 1500
+          })
+      }
+      notifyUpdate();
+    </script>
+  {% endif %}
+  <div style="margin-left:20px;margin-top:20px">
+    <div class="card-controls">
+      {% if is_self_cardset %}<a class="w3-button w3-black" href="{% url 'cardset-detail' uuid %}/card-create">新增卡片</a>{% endif %}
+      <button  onclick="copyCardsetID()" class="w3-button w3-black">複製卡片集ID</button>
+    </div>
+    <span style="font-size:20px">卡片內容:(共有{{ chance_card_len }}張)</span> 
+    {% for card in cardset.chancecard_set.all %}
+      <div onclick="collapse({{ card.id }}, {{ card.multiple_choice_answer }})" class="w3-hover-shadow w3-card monopoly-card collapsible">
+        <div class="flex title-area">
+          <div class="title">{{ card.description|truncatechars:25 }}</div>
+          {% if is_self_cardset %}
+          <div>
+            <a onclick="stopPropagation(event)" class="w3-button w3-black card-edit" href="{% url 'cardset-detail' uuid %}/card-edit/{{ card.id }}">編輯</a>
+            <i onclick="ConfirmDeleteCard(event, {{ card.id }})" class="w3-button w3-red card-edit far fa-trash-alt delete-icon"></i>
+          </div>
+          {% endif %}
+        </div>
+        <div id="{{ card.id }}" class="content">
+          <div class="blank-height-12"></div>
+          <div class="flex">
+            <div>副標題: {{ card.subtitle }}</div>
+          </div>
+          <div class="divider divider-horizontal" role="separator" style="margin-top: 6px; margin-bottom: 6px;"></div>
+          <div class="flex">
+            <div>內容: {{ card.description }}</div>
+          </div>
+          <div class="divider divider-horizontal" role="separator" style="margin-top: 6px; margin-bottom: 6px;"></div>
+          <div {% if card.is_multiple_choice %}{% else %}style="display: none;"{% endif %}>
+             <div>
+                <div class="choice-1">{{ card.multiple_choice_1 }}</div>
+                <div class="choice-2">{{ card.multiple_choice_2 }}</div>
+                <div class="choice-3">{{ card.multiple_choice_3 }}</div>
+                <div class="choice-4">{{ card.multiple_choice_4 }}</div>
+                <div>答錯時減少金額: {{ card.money_deduction_when_wrong_answer }}</div>
+             </div>
+             <div class="divider divider-horizontal" role="separator" style="margin-top: 6px; margin-bottom: 6px;"></div>
+          </div>
+          <div>
+            <div>增加金額: {{ card.money_addition }}</div>
+            <div>減少金額: {{ card.money_deduction }}</div>
+            <div>暫停回合: {{ card.stop_round }}</div>
+          </div>
+          <div class="divider divider-horizontal" role="separator" style="margin-top: 6px; margin-bottom: 6px;"></div>
+          <div class="">
+            <div class="w3-col s4">x1變化值: {{ card.variable_1_change }}</div>
+            <div class="w3-col s4">x2變化值: {{ card.variable_2_change }}</div>
+            <div class="w3-col s4">x3變化值: {{ card.variable_3_change }}</div>
+          </div>
+          <div class="">
+            <div class="w3-col s4">x4變化值: {{ card.variable_4_change }}</div>
+            <div class="w3-col s4">x5變化值: {{ card.variable_5_change }}</div>
+            <div class="w3-col s4"></div>
+          </div>
+        </div>
+      </div>
+ 
+    {% endfor %}
+  </div>
+
+  <script type="text/javascript">
+    const delete_btn = document.getElementById('delete');
+    const delete_card_btn = document.getElementById('delete-card');
+    const event = new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: true
+        });
+    function confirmDelete() {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+
+      swalWithBootstrapButtons.fire({
+        title: '確定要刪除嗎?',
+        text: "刪除後的卡片集無法復原喔!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '是的，我要刪除!',
+        cancelButtonText: '先不要刪除',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          delete_btn.dispatchEvent(event);
+        } 
+      })
+    }
+    function ConfirmDeleteCard(event, cardID) {
+      event.stopPropagation();
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+
+      swalWithBootstrapButtons.fire({
+        title: '確定要刪除嗎?',
+        text: "刪除後的卡片無法復原喔!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '是的，我要刪除!',
+        cancelButtonText: '先不要刪除',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          delete_card_btn.value = cardID;
+          delete_card_btn.dispatchEvent(event);
+        } 
+      })
+    }
+    function copyCardsetID() {
+        var copyText = document.getElementById("cardsetID");
+        copyText.type = 'text';
+        copyText.select();
+        document.execCommand("Copy");
+        copyText.type = 'hidden'
+        Swal.fire({
+          icon: 'success',
+          title: '已複製卡片ID',
+          showConfirmButton: false,
+          timer: 1200
+        })
+    }
+    function collapse(cardID, answer) {
+      let collapseContent = document.getElementById(cardID);
+      if (collapseContent.className.indexOf("w3-show") == -1) {
+        collapseContent.className += " w3-show";
+      } else { 
+        collapseContent.className = collapseContent.className.replace(" w3-show", "");
+      }
+      //color answer
+      let choice_answer = "#" + cardID + " .choice-" + answer;
+      $(choice_answer).css("color", "green");
+    }
+    function stopPropagation(event) {
+      event.stopPropagation();
+    }
+
+  </script>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#cardset-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

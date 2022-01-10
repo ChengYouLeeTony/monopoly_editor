@@ -1,0 +1,35 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block content %}
+  <h1>我的地圖</h1>
+  <ul>
+  {% if user_maps %}
+      {% for user_map in user_maps %}
+        <li>
+          <a href={{ user_map.get_absolute_url }}>{{ user_map.map_name }}</a>
+        </li>
+      {% endfor %}
+  {% else %}
+    <p>還沒有建立地圖喔!</p>
+  {% endif %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <label for="fname">地圖ID:</label>
+    <input type="text" id="map-id" name="map-id">
+    <input type="submit" name="import" id="import-map" value="導入">
+  </form>
+  {% if error_message %}
+    <div class="w3-panel w3-red">
+      <h3>錯誤:</h3>
+      <p>{{ error_message }}</p>
+    </div>
+  {% endif %}
+    <a style="margin-top: 1vh" class="w3-button w3-black" href="{% url 'map-create' %}">建立新地圖</a>
+    </ul>
+{% endblock %}
+{% block additionalScript %}
+  <script src="{% static 'js/creator/map_list.js' %}" type="text/javascript"></script>
+  <script>
+    $('#map-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

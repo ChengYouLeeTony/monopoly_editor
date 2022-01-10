@@ -1,0 +1,34 @@
+{% extends "base_creator.html" %}
+
+{% block content %}
+  <h1>我的卡片集</h1>
+  <ul>
+  {% if user_cardsets %}
+    {% for user_cardset in user_cardsets %}
+      <li>
+        <a href={{ user_cardset.get_absolute_url }}>{{ user_cardset.cardset_name }}</a>
+      </li>
+    {% endfor %}
+  {% else %}
+    <p>還沒有建立卡片集喔!</p>
+  {% endif %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <label for="fname">卡片集ID:</label>
+    <input type="text" id="carset-id" name="carset-id">
+    <input type="submit" name="import" value="導入">
+  </form>
+  {% if error_message %}
+    <div class="w3-panel w3-red">
+      <h3>錯誤:</h3>
+      <p>{{ error_message }}</p>
+    </div> 
+  {% endif %}
+  <a style="margin-top: 1vh" class="w3-button w3-black" href="{% url 'cardset-create' %}">建立卡片集</a>
+  </ul> 
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#cardset-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block content %}
+  <style type="text/css">
+    .errorlist {
+      display: none;
+    }
+  </style>
+  <form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input onclick="history.back()" type="button" class="w3-button w3-black" value="返回">
+    <input id="create-map" type="submit" class="w3-button w3-black" value="建立">
+  </form>
+  {% if error_message %}
+    <div class="w3-panel w3-red">
+      <h3>錯誤:</h3>
+      <p>{{ error_message }}</p>
+    </div> 
+  {% endif %}
+{% endblock %}
+{% block additionalScript %}
+  <script src="{% static 'js/creator/map_create.js' %}" type="text/javascript"></script>
+  <script>
+    $('#map-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

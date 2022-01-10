@@ -1,0 +1,62 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block files %}
+<link rel="stylesheet" href="{% static 'css/music_list.css' %}">
+{% endblock %}
+{% block content %}
+<script type="text/javascript">
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+  {% if author.name == "default/se" %}
+    <h1>部分來自<a href="{{ credit_url }}" target="_blank">MoonWind</a></h1>
+  {% else %}
+    <h1>來自<a href="{{ credit_url }}" target="_blank">{{ author.name }}</a></h1>
+  {% endif %}
+  {% for music in page_obj %}
+  <div class="w3-hover-shadow w3-card music-card collapsible">
+      <div class="flex w3-center title-area">
+        <div class="title"><a href="https://monopolyuserupload.blob.core.windows.net/userdata/music/{{ author.name }}/{{ music.path }}" target="_blank">{{ music.name }}</a></div>
+        <div>
+          <audio class="w3-button audio" controls="controls">
+              <source src="https://monopolyuserupload.blob.core.windows.net/userdata/music/{{ author.name }}/{{ music.path }}" type="audio/mpeg">
+              Your browser does not support the audio element.
+          </audio>
+          <i class="w3-button w3-black fas fa-copy icon" data-toggle="tooltip" data-placement="top" data-path="{{ author.name}}/{{ music.path }}" title="Copy URL"> 複製</i>
+        </div>
+      </div>
+  </div>
+  {% endfor %}
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#music-page').addClass("side-bar-item-activate");
+
+    $('.fa-copy').on('mousedown', function() {
+      $(this).tooltip('dispose').attr('title', 'Copied!').tooltip('show');
+      let music_path = $(this).data('path');
+      navigator.clipboard.writeText(music_path);
+    });
+    $('.fa-copy').on('mouseover', function() {
+      $(this).tooltip('dispose').attr('title', 'Copy URL').tooltip('show');
+    });
+  </script>
+{% endblock %}

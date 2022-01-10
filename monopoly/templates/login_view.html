@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Monopoly {% endblock %}
+
+{% block files %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="login-container" class="card">
+    <div class="card-blur-container">
+        <div class="card-blur"></div>
+    </div>
+    <div class="card-content-container">
+        <form id="form-container" class="center" method="POST">
+            {% csrf_token %}
+            {% if active_page == "login" %}
+            <span id="login-title">登入大富翁創造家</span>
+            {% elif active_page == "register"%}
+            <span id="login-title">註冊大富翁創造家</span>
+            {% endif %}
+            {% if error %}
+                <span id="login-error" class="card"> {{error}} </span>
+            {% endif %}
+            {% if active_page == "register" %}
+            <div id="login-name-group">
+                <input name="firstname" id="login-first-name" placeholder="名"/>
+                <input name="lastname" id="login-last-name" placeholder="姓"/>
+            </div>
+            <input name="email" type="email" id="login-email" placeholder="信箱"/>
+            {% endif %}
+            <input name="username" id="login-user-name" placeholder="使用者名稱"/>
+            <input name="password" type="password" id="login-password" placeholder="密碼"/>
+            {% if active_page == "login" %}
+             <button type="submit" id="login-submit" class="large-button">登入</button>
+            {% elif active_page == "register"%}
+             <button type="submit" id="login-submit" class="large-button">註冊</button>
+            {% endif %}
+        </form>
+        <span id="login-switch" class="card">
+            {% if active_page == "register" %}
+            已經有帳號了嗎? &nbsp;
+            <a href="/monopoly/login">點我來登入帳號</a>
+            {% else %}
+            新來這裡嗎? &nbsp;
+            <a href="/monopoly/register">點我來創建帳號</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}

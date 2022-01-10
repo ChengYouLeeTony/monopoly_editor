@@ -1,0 +1,10 @@
+.ratiao-abd-constant {
+	width: 45px;
+}
+span, label {
+	font-weight: bold;
+}
+
+.errorlist {
+	display: none;
+}

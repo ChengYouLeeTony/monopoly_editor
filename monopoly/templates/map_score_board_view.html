@@ -1,0 +1,54 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block files %}
+<link rel="stylesheet" href="{% static 'css/map_score_board.css' %}">
+<link rel="stylesheet" href="{% static 'css/card_create.css' %}">
+<link rel="stylesheet" href="{% static 'css/game.css' %}">
+{% endblock %}
+{% block content %}
+  <input id="avatar" hidden value="{{ avatar }}" title="avatar">
+  <input id="user_name" hidden value="{{ user_name }}" title="user_name">
+  <input id="other_audio_url" hidden value="{{ other_audio_url }}" title="other_audio_url">
+  <input id="background_music_setting" hidden value="{{ background_music_setting }}">
+  <form action="" method="post">
+    {% csrf_token %}
+    <table id="card-form">
+    {{ form.as_table }}
+    </table>
+    <input type="button" onclick="location.href='{% url 'map-detail' map_id%}'" class="w3-button w3-black" value="返回"></input>
+    <input id="update" type="submit" class="w3-button w3-black" name="update" value="更新">
+    <input id="preview" type="button" class="w3-button w3-black" value="預覽">
+  </form>
+  <div id="modal-card" class="card center-card hidden modal-hidden">
+      <div class="card-blur-container">
+          <div class="card-blur"></div>
+      </div>
+      <div id="content-container" class="card-content-container scoreboard-bg">
+          <img id="modal-user-avatar" class="active" src="">
+          <span id="modal-title"></span>
+          <span id="modal-subtitle"></span>
+          <div class="w3-center" id="modal-message-container"></div>
+          <div id="modal-buttons-container"></div>
+      </div>
+  </div>
+  {% if error_message %}
+    <script language='javascript' type='text/javascript'>
+      function notifyError() {
+          Swal.fire({
+            icon: 'error',
+            title: "{{ error_message|safe }}",
+            showConfirmButton: false,
+            timer:  2000
+          })
+      }
+      notifyError();
+    </script>       
+  {% endif %}
+{% endblock %}
+{% block additionalScript %}
+  <script src="{% static 'js/utils/audio_manager_score_board.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/creator/score_board.js' %}" type="text/javascript"></script>
+  <script>
+    $('#map-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

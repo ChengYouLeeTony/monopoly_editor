@@ -1,0 +1,31 @@
+.title {
+	color: rgb(0, 0, 0);
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.flex {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content:  space-between;
+	align-items: center
+}
+
+.icon {
+	font-size: 16px;
+	border-radius: 20px;
+}
+.music-card {
+	padding: 4px;
+    zoom: 1;
+    margin-bottom: 1vh;
+    cursor: pointer;
+}
+
+.title-area {
+	padding-left: 10px;
+}
+
+.audio:hover {
+	background-color: white !important;
+}

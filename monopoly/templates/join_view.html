@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Monopoly {% endblock %}
+
+{% block files %}
+<link rel="stylesheet" href="{% static 'css/join.css' %}">
+<script src="{% static 'js/views/join.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<div id="join-card-container" class="card">
+    <input id="user-name" value="{{ user.name }}" hidden>
+    <input id="host-name" value="{{ host_name }}" hidden>
+    <input id="map-id" value="{{ map_id }}" hidden>
+    <input id="viewer-url" value="{{ viewer_url }}" hidden>
+    <div class="card-blur-container">
+        <div class="card-blur"></div>
+    </div>
+    <div class="card-content-container">
+        <a href="/monopoly/profile/{{ user.name }}" target="_self">
+            <img id="user-avatar" src="{{ user.avatar }}">
+        </a>
+        <span id="new-game-notice">新遊戲!</span>
+        <div id="joined-users-container">
+            <a href="/monopoly/profile/{{ user.name }}" target="_self">
+                <img class="joined-user-avatar" src="{{ user.avatar }}" title="{{ user.name }}">
+            </a>
+        </div>
+        <button id="start-game" class="large-button" disabled>
+            等待朋友加入中...
+        </button>
+        <button id="clear-history" class="join-button">
+            清除遊玩紀錄
+        </button>
+        <button id="clear-friends" class="join-button">
+            踢出其餘玩家
+        </button>
+        {% if host_name == user.name %}
+        <button id="start-game-creator" class="join-button" >
+            開始遊戲(創作者模式)
+        </button>
+        {% else %}
+        <button id="start-game-creator" class="join-button" style="display: none;">
+            開始遊戲(創作者模式)
+        </button>
+        {% endif %}
+        <button id="leave-game" class="join-button">
+            離開遊戲
+        </button>
+        <button id="back-to-home" onclick="location.href='/monopoly/creator';" class="join-button">
+                返回首頁
+        </button>
+        <a href="/monopoly/profile/{{ user.name }}" target="_blank">
+            <button id="init-profile" class="large-button hidden">
+                上傳一張圖片讓朋友辨識吧!
+            </button>
+        </a>
+        {% if host_name == user.name %}
+        <hr>
+        <span id="invitation-note">用以下連結來邀請朋友加入</span>
+        <div id="invitation-container">
+            <input id="invitation-url" readonly value="" placeholder="Generating shared link...">
+            <div class="tooltip">
+                <button id="share-invitation" class="large-button">
+                    <span id="copied-tooltip" class="tooltiptext" >已複製! &#x1F44C;</span>
+                    複製
+                </button>
+            </div>
+        </div>
+        <span id="viewer-note">用以下連結來邀請觀戰者加入(請他們於開始後再加入)</span>
+        <div id="viewer-container">
+            <input id="for-viewer-url" readonly value="" placeholder="Generating shared link...">
+            <div class="tooltip">
+                <button id="share-viewer" class="large-button">
+                    <span id="copied-tooltip-viewer" class="tooltiptext" >已複製! &#x1F44C;</span>
+                    複製
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<script type="text/javascript">
+    let background_img_url = "{{ background_img_url|safe }}";
+    if (background_img_url !== '預設')  {
+        document.body.style.background = `url("${background_img_url}") no-repeat`;
+        document.body.style.backgroundSize = `cover`;
+    }
+</script>
+{% endblock %}

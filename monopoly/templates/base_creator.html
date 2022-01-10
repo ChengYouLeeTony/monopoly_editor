@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  {% block title %}<title>Monopoly Creater</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}"/>
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <script src="https://unpkg.com/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/7b66e29d9e.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="//unpkg.com/sweetalert2@11"></script>
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  {% block files %}{% endblock %}
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'creator-home-page' %}"><img id="home-logo" src="{% static 'images/favicon.png' %}"></a>
+    <div class="nav-no-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a id="home-text" class="nav-link" href="{% url 'creator-home-page' %}">大富翁創造家</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a id="user-profile" class="nav-link" href="{% url 'profile' user %}">
+            {% if user.profile.avatar.url %}
+              <img style="height: 30px;width: 30px;border-radius: 50%;" src="{{ user.profile.avatar.url }}">
+            {% endif %}
+            {{ user }}
+          </a>
+          <a id="login-button" class="nav-link" href="/monopoly/logout">
+            <img id="dice-svg" src="{% static 'images/dice.svg' %}">登出
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a id="login-button" class="nav-link" href="{% url 'login' %}">
+            <img id="dice-svg" src="{% static 'images/dice.svg' %}">登入
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+    <div class="w3-sidebar w3-bar-block" style="width:16vw">
+    {% block sidebar %}
+      <a id="tutorial-page" href="{% url 'tutorial' %}" class="w3-bar-item w3-button">使用說明</a>
+      <a id="cardset-page" href="{% url 'creator-my-cardsets' %}" class="w3-bar-item w3-button">我的卡片集</a>
+      <a id="map-page" href="{% url 'creator-my-maps' %}" class="w3-bar-item w3-button">我的地圖</a>
+      <a id="cardset-gallery" href="{% url 'cardset-gallery' %}" class="w3-bar-item w3-button">找卡片集</a>
+      <a id="map-gallery" href="{% url 'map-gallery' %}" class="w3-bar-item w3-button">找地圖</a>
+      <a id="map-sample" href="{% url 'map-sample' %}" class="w3-bar-item w3-button">地圖範例</a>
+      <a id="img-download" href="{% url 'img-download' %}" class="w3-bar-item w3-button">圖片下載</a>
+      <a id="thanks" href="{% url 'thanks' %}" class="w3-bar-item w3-button">感謝名單</a>
+      <button id="music-page" class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
+      音樂庫 <i class="fa fa-caret-down"></i>
+      </button>
+      <div id="demoAcc" class="w3-hide w3-white w3-card">
+        <a href="/monopoly/creator/music/aaron_krogh" class="w3-bar-item w3-button">Aaron Krogh</a>
+        <a href="/monopoly/creator/music/moon-wind" class="w3-bar-item w3-button">MoonWind</a>
+        <a href="/monopoly/creator/music/se" class="w3-bar-item w3-button">音效</a>
+      </div>
+      
+   {% endblock %}
+    </div>
+    <div style="margin-left:18vw;margin-top: 10vh;">{% block content %}{% endblock %}</div>
+<!-- Add additional script -->
+{% block additionalScript %}{% endblock %}
+<script>
+  function myAccFunc() {
+    var x = document.getElementById("demoAcc");
+    if (x.className.indexOf("w3-show") == -1) {
+      x.className += " w3-show";
+      x.previousElementSibling.className += " w3-green";
+    } else { 
+      x.className = x.className.replace(" w3-show", "");
+      x.previousElementSibling.className = 
+      x.previousElementSibling.className.replace(" w3-green", "");
+    }
+  }
+</script>
+</body>
+</html>

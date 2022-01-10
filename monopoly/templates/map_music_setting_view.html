@@ -1,0 +1,39 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block files %}
+<link rel="stylesheet" href="{% static 'css/music_setting.css' %}">
+<script type="text/javascript">
+  let volume_setting_info = {{ volume_setting_info|safe }};
+  console.log(volume_setting_info);
+</script>
+<script src="{% static 'js/utils/audio_manager_music_setting.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <table id="music-setting-form">
+    {{ form.as_table }}
+    </table>
+    <input type="button" onclick="location.href='{% url 'map-detail' map_id%}'" class="w3-button w3-black" value="返回"></input>
+    <input id="update" type="submit" class="w3-button w3-black" name="update" value="更新">
+  </form>
+  {% if error_message %}
+    <script language='javascript' type='text/javascript'>
+      function notifyError() {
+          Swal.fire({
+            icon: 'error',
+            title: "{{ error_message|safe }}",
+            showConfirmButton: false,
+            timer:  2000
+          })
+      }
+      notifyError();
+    </script>       
+  {% endif %}
+{% endblock %}
+{% block additionalScript %}
+  <script src="{% static 'js/creator/music_setting.js' %}" type="text/javascript"></script>
+  <script>
+    $('#map-page').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

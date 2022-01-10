@@ -1,0 +1,29 @@
+{% extends "base_creator.html" %}
+
+{% block content %}
+<style type="text/css">
+	h3 {
+		color: #1890ff;
+	}
+</style>
+<div id="image">
+	<h3>圖片下載連結</h3>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/-1.png">底圖(無框)</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/background.png">底圖(黑框)</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/0.png">起點</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/7.png">機會</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/2.png">命運</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/5.png">火車站</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/10.png">監獄</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/30.png">進監獄</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/4.png">所得稅</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/38.png">財產稅</a></div>
+	<div><a href="https://monopolyuserupload.blob.core.windows.net/userdata/img_download/20.png">停車場</a></div>	
+</div>
+
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#img-download').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}

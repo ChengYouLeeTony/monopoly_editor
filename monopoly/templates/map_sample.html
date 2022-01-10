@@ -1,0 +1,24 @@
+{% extends "base_creator.html" %}
+{% load static %}
+{% block content %}
+<style type="text/css">
+  #title {
+    color: #1890ff;
+  }
+</style>
+<ul class="w3-ul w3-border w3-round-xxlarge w3-border-blue">
+  <li>
+    <h3 id="title">範例地圖</h3>
+  </li>
+  {% for sample_map in sample_maps %}
+      <li>
+        <a href={{ sample_map.get_absolute_url }}>{{ sample_map.map_name }}</a>
+      </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+{% block additionalScript %}
+  <script>
+    $('#map-sample').addClass("side-bar-item-activate");
+  </script>
+{% endblock %}
